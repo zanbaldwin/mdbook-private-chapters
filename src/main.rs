@@ -22,7 +22,10 @@ fn main() {
     let matches = make_app().get_matches();
 
     if let Some(sub_matches) = matches.subcommand_matches("supports") {
-        if sub_matches.get_one("renderer").is_some_and(|renderer| supported_renderers().contains(renderer)) {
+        if sub_matches
+            .get_one::<String>("renderer")
+            .is_some_and(|renderer| supported_renderers().contains(&renderer.as_str()))
+        {
             process::exit(0);
         } else {
             process::exit(1);
